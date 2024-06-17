@@ -41,7 +41,23 @@ app = FastAPI()
 
 
 #edward add this#
-# def connect_with_connector() -> sqlalchemy.engine.base.Engine:
+
+class DataEntry(BaseModel):
+    message: str
+
+@app.post("/insertdata")
+async def insert_data(data: DataEntry):
+    try:
+        with pool.connect() as conn:
+            sql = """
+            INSERT INTO test_table (message, created_at)
+            VALUES (:message, NOW())
+            """
+            conn.execute(sql, {"message": data.message})
+            conn.commit()
+        return {"status": "success", "message": "Data inserted successfully"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 #edward add this#    
 
 instance_connection_name = os.environ["INSTANCE_CONNECTION_NAME"]
