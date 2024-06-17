@@ -68,7 +68,7 @@ steps:
    args:
    - 'run'
    - 'deploy'
-   - 'backend'
+   - 'edward-zu-run-to-sql-prod'
    - '--image'
    - 'asia-east1-docker.pkg.dev/gcpsa-sandbox/edward-zu-repository-prod/edward-zu-run-sql-prod:$COMMIT_SHA'
   #  - '--clear-secrets'

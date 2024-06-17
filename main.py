@@ -20,6 +20,7 @@ from sql_tools import SQLTools
 import sql_query_string as query_str
 
 
+
 app = FastAPI()
 
 # 資料庫連線 TCP/UNIX
@@ -140,4 +141,3 @@ async def websocket_endpoint(websocket: WebSocket):
 
     except Exception as e:
         raise e
-    
