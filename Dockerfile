@@ -10,4 +10,5 @@ COPY . .
 
 # 啟動 Cloud SQL 代理和應用程式
 #CMD uvicorn main:app --host 0.0.0.0 --port 8080
-CMD exec gunicorn --bind :$PORT --workers 1 --threads 8 app:app
+CMD uvicorn main:app --host 127.0.0.1 --port 8080
+#CMD exec gunicorn --bind :$PORT --workers 1 --threads 8 app:app
