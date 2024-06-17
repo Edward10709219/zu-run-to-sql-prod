@@ -37,29 +37,30 @@ app = FastAPI()
 # )
 
 # 資料庫連線 The Cloud SQL Python Connector
-instance_connection_name = os.environ["INSTANCE_CONNECTION_NAME"]
-db_user = os.environ["DB_USER"]  # e.g. 'my-db-user'
-db_pass = os.environ["DB_PASS"]  # e.g. 'my-db-password'
-db_name = os.environ["DB_NAME"]  # e.g. 'my-database'
+def connect_with_connector() -> sqlalchemy.engine.base.Engine:
+    instance_connection_name = os.environ["INSTANCE_CONNECTION_NAME"]
+    db_user = os.environ["DB_USER"]  # e.g. 'my-db-user'
+    db_pass = os.environ["DB_PASS"]  # e.g. 'my-db-password'
+    db_name = os.environ["DB_NAME"]  # e.g. 'my-database'
 # iam_user = os.environ["IAM_USER"]
 # secret_credentials = os.environ["SECRET_CREDENTIALS"]
-ip_type = IPTypes.PUBLIC
+    ip_type = IPTypes.PUBLIC
 
 # initialize Cloud SQL Python Connector object
-connector = Connector()
-def getconn() -> pg8000.dbapi.Connection:
-    conn: pg8000.dbapi.Connection = connector.connect(
-        instance_connection_name,
-        "pg8000",
-        user=db_user,
+    connector = Connector()
+    def getconn() -> pg8000.dbapi.Connection:
+        conn: pg8000.dbapi.Connection = connector.connect(
+            instance_connection_name,
+            "pg8000",
+            user=db_user,
         # user=iam_user,
-        password=db_pass,
-        db=db_name,
+            password=db_pass,
+            db=db_name,
         # credentials=secret_credentials,
         # enable_iam_auth=True,
-        ip_type=ip_type,
-    )
-    return conn
+            ip_type=ip_type,
+        )
+        return conn
 
 # 設定 Userinfo 與 Conversationlog 兩個 API 的 request format
 class Userinfo(BaseModel):

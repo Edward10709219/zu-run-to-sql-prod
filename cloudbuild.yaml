@@ -92,7 +92,7 @@ steps:
    - '--set-env-vars'
    - 'DB_NAME="edward-db"'
    - '--set-env-vars'
-   - 'VENDOR_TOKEN="VVVVV"'
+   - 'VENDOR_TOKEN="edward-test"'
    - '--region'
    - 'asia-east1'
    - '--port'
