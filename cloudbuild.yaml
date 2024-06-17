@@ -97,6 +97,6 @@ steps:
    - 'asia-east1'
    - '--port'
    - '8080'
-   secretEnv: ['GOOGLE_APPLICATION_CREDENTIALS']
+  #  secretEnv: ['GOOGLE_APPLICATION_CREDENTIALS']
 images:
  - 'asia-east1-docker.pkg.dev/gcpsa-sandbox/edward-zu-repository-prod/edward-zu-run-sql-prod:$COMMIT_SHA'
