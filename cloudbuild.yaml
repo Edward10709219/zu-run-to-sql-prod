@@ -1,10 +1,66 @@
+# steps:
+#  # Build the container image
+#  - name: 'gcr.io/cloud-builders/docker'
+#    args: ['build', '-t', 'asia-east1-docker.pkg.dev/gcpsa-sandbox/edward-zu-repository-prod/edward-zu-run-sql-prod:$COMMIT_SHA', '.']
+#  # Push the container image to Container Registry
+#  - name: 'gcr.io/cloud-builders/docker'
+#    args: ['push', 'asia-east1-docker.pkg.dev/gcpsa-sandbox/edward-zu-repository-prod/edward-zu-run-sql-prod:$COMMIT_SHA']
+
+#  # Deploy container image to Cloud Run
+#  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+#    entrypoint: 'gcloud'
+#    args:
+#    - 'run'
+#    - 'deploy'
+#    - 'edward-zu-run-to-sql-prod'
+#    - '--image'
+#    - 'asia-east1-docker.pkg.dev/gcpsa-sandbox/edward-zu-repository-prod/edward-zu-run-sql-prod:$COMMIT_SHA'
+#   #  - '--clear-secrets'
+#   #  - '--update-secrets=/path/to/credentials/file.json={secret_manager_name}:1'
+#   #  - '--update-secrets=GOOGLE_APPLICATION_CREDENTIALS={secret_manager_name}:1'
+#    - '--timeout=3600'
+#    - '--allow-unauthenticated'
+#    - '--add-cloudsql-instances'
+#    - 'gcpsa-sandbox:asia-east1:edward-postgres'
+#   #  - '--clear-env-vars'
+#   #  - '--set-env-vars'
+#   #  - 'GOOGLE_APPLICATION_CREDENTIALS="/path/to/credentials/file.json"'
+#   #  - '--set-env-vars'
+#   #  - 'INSTANCE_UNIX_SOCKET="/cloudsql/{project_id}:{INSTANCE_CONNECTION_NAME}"'
+#    - '--set-env-vars'
+#    - 'INSTANCE_CONNECTION_NAME=gcpsa-sandbox:asia-east1:edward-postgres
+#    - '--set-env-vars'
+#    - 'DB_USER="postgres"'
+#    - '--set-env-vars'
+#    - 'DB_PASS="1qaz@wsx"'
+#    - '--set-env-vars'
+#    - 'DB_NAME="edward-db"'
+#    - '--set-env-vars'
+#    - 'VENDOR_TOKEN="VVVVV"'
+#    - '--region'
+#    - 'asia-east1' 
+#     - '--port'
+#    - '8080'
+#    secretEnv: ['GOOGLE_APPLICATION_CREDENTIALS']
+
+# images: 
+# - 'asia-east1-docker.pkg.dev/gcpsa-sandbox/edward-zu-repository-prod/edward-zu-run-sql-prod:$COMMIT_SHA'
+
+# availableSecrets:
+#   secretManager:
+#   - versionName: projects/{project_id}/secrets/{secret_manager_name}/versions/1
+#     env: 'GOOGLE_APPLICATION_CREDENTIALS'
+# options:
+#   logging: CLOUD_LOGGING_ONLY
+
+
 steps:
  # Build the container image
  - name: 'gcr.io/cloud-builders/docker'
-   args: ['build', '-t', 'gcr.io/{project_id}/backend:$COMMIT_SHA', '.']
+   args: ['build', '-t', 'asia-east1-docker.pkg.dev/gcpsa-sandbox/edward-zu-repository-prod/edward-zu-run-sql-prod:$COMMIT_SHA', '.']
  # Push the container image to Container Registry
  - name: 'gcr.io/cloud-builders/docker'
-   args: ['push', 'gcr.io/{project_id}/backend:$COMMIT_SHA']
+   args: ['push', 'asia-east1-docker.pkg.dev/gcpsa-sandbox/edward-zu-repository-prod/edward-zu-run-sql-prod:$COMMIT_SHA']
 
  # Deploy container image to Cloud Run
  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
@@ -14,27 +70,27 @@ steps:
    - 'deploy'
    - 'backend'
    - '--image'
-   - 'gcr.io/{project_id}/backend:$COMMIT_SHA'
+   - 'asia-east1-docker.pkg.dev/gcpsa-sandbox/edward-zu-repository-prod/edward-zu-run-sql-prod:$COMMIT_SHA'
   #  - '--clear-secrets'
   #  - '--update-secrets=/path/to/credentials/file.json={secret_manager_name}:1'
   #  - '--update-secrets=GOOGLE_APPLICATION_CREDENTIALS={secret_manager_name}:1'
    - '--timeout=3600'
    - '--allow-unauthenticated'
    - '--add-cloudsql-instances'
-   - '{project_id}:{INSTANCE_CONNECTION_NAME}'
+   - 'gcpsa-sandbox:asia-east1:edward-postgres'
   #  - '--clear-env-vars'
   #  - '--set-env-vars'
   #  - 'GOOGLE_APPLICATION_CREDENTIALS="/path/to/credentials/file.json"'
   #  - '--set-env-vars'
   #  - 'INSTANCE_UNIX_SOCKET="/cloudsql/{project_id}:{INSTANCE_CONNECTION_NAME}"'
    - '--set-env-vars'
-   - 'INSTANCE_CONNECTION_NAME="{project_id}:{INSTANCE_CONNECTION_NAME}"'
+   - 'INSTANCE_CONNECTION_NAME="gcpsa-sandbox:asia-east1:edward-postgres"'
    - '--set-env-vars'
-   - 'DB_USER="UUUUU"'
+   - 'DB_USER="postgres"'
    - '--set-env-vars'
-   - 'DB_PASS="PPPPP"'
+   - 'DB_PASS="1qaz@wsx"'
    - '--set-env-vars'
-   - 'DB_NAME="NNNNN"'
+   - 'DB_NAME="edward-db"'
    - '--set-env-vars'
    - 'VENDOR_TOKEN="VVVVV"'
    - '--region'
@@ -43,10 +99,4 @@ steps:
    - '8080'
    secretEnv: ['GOOGLE_APPLICATION_CREDENTIALS']
 images:
- - 'gcr.io/{project_id}/backend:$COMMIT_SHA'
-availableSecrets:
-  secretManager:
-  - versionName: projects/{project_id}/secrets/{secret_manager_name}/versions/1
-    env: 'GOOGLE_APPLICATION_CREDENTIALS'
-options:
-  logging: CLOUD_LOGGING_ONLY
+ - 'asia-east1-docker.pkg.dev/gcpsa-sandbox/edward-zu-repository-prod/edward-zu-run-sql-prod:$COMMIT_SHA'
