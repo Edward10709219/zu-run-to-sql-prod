@@ -160,10 +160,14 @@ async def insert_data(data: DataEntry):
                 INSERT INTO test_table (message, created_at)
                 VALUES (:message, NOW())
             """)
-            conn.execute(sql, {"message": data.message})
+            print("Executing SQL:", sql)  # 打印 SQL 语句以进行调试
+            result = conn.execute(sql, {"message": data.message})
+            print("Insert result:", result)  # 打印插入结果以进行调试
         return {"status": "success", "message": "Data inserted successfully"}
     except Exception as e:
+        print(f"Error in /insertdata: {e}")  # 打印错误信息
         raise HTTPException(status_code=500, detail=str(e))
+    
 #edward add this#    
 #edward add this#     
 
