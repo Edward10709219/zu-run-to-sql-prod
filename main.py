@@ -5,6 +5,7 @@ import time
 import random
 import hashlib
 
+
 from fastapi import Depends, FastAPI, WebSocket, HTTPException
 from fastapi.responses import HTMLResponse
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
@@ -37,7 +38,9 @@ app = FastAPI()
 # )
 
 # 資料庫連線 The Cloud SQL Python Connector
+#edward add this#
 def connect_with_connector() -> sqlalchemy.engine.base.Engine:
+#edward add this#    
     instance_connection_name = os.environ["INSTANCE_CONNECTION_NAME"]
     db_user = os.environ["DB_USER"]  # e.g. 'my-db-user'
     db_pass = os.environ["DB_PASS"]  # e.g. 'my-db-password'
@@ -48,19 +51,19 @@ def connect_with_connector() -> sqlalchemy.engine.base.Engine:
 
 # initialize Cloud SQL Python Connector object
     connector = Connector()
-    def getconn() -> pg8000.dbapi.Connection:
-        conn: pg8000.dbapi.Connection = connector.connect(
-            instance_connection_name,
-            "pg8000",
-            user=db_user,
-        # user=iam_user,
-            password=db_pass,
-            db=db_name,
-        # credentials=secret_credentials,
-        # enable_iam_auth=True,
-            ip_type=ip_type,
-        )
-        return conn
+def getconn() -> pg8000.dbapi.Connection:
+    conn: pg8000.dbapi.Connection = connector.connect(
+        instance_connection_name,
+        "pg8000",
+        user=db_user,
+    # user=iam_user,
+        password=db_pass,
+        db=db_name,
+    # credentials=secret_credentials,
+    # enable_iam_auth=True,
+        ip_type=ip_type,
+    )
+    return conn
 
 # 設定 Userinfo 與 Conversationlog 兩個 API 的 request format
 class Userinfo(BaseModel):
