@@ -38,19 +38,22 @@ app = FastAPI()
 # )
 
 # 資料庫連線 The Cloud SQL Python Connector
+
+
 #edward add this#
-def connect_with_connector() -> sqlalchemy.engine.base.Engine:
+# def connect_with_connector() -> sqlalchemy.engine.base.Engine:
 #edward add this#    
-    instance_connection_name = os.environ["INSTANCE_CONNECTION_NAME"]
-    db_user = os.environ["DB_USER"]  # e.g. 'my-db-user'
-    db_pass = os.environ["DB_PASS"]  # e.g. 'my-db-password'
-    db_name = os.environ["DB_NAME"]  # e.g. 'my-database'
+
+instance_connection_name = os.environ["INSTANCE_CONNECTION_NAME"]
+db_user = os.environ["DB_USER"]  # e.g. 'my-db-user'
+db_pass = os.environ["DB_PASS"]  # e.g. 'my-db-password'
+db_name = os.environ["DB_NAME"]  # e.g. 'my-database'
 # iam_user = os.environ["IAM_USER"]
 # secret_credentials = os.environ["SECRET_CREDENTIALS"]
-    ip_type = IPTypes.PUBLIC
+ip_type = IPTypes.PUBLIC
 
 # initialize Cloud SQL Python Connector object
-    connector = Connector()
+connector = Connector()
 def getconn() -> pg8000.dbapi.Connection:
     conn: pg8000.dbapi.Connection = connector.connect(
         instance_connection_name,
