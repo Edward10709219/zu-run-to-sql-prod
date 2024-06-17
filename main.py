@@ -175,7 +175,7 @@ def connect_with_connector() -> sqlalchemy.engine.base.Engine:
     return sqlalchemy.create_engine("postgresql+pg8000://", creator=getconn)
 
 
-pool = connect_with_connector()
+pool = sqlalchemy.create_engine("postgresql+pg8000://", creator=getconn)
 
 class DataEntry(BaseModel):
     message: str
@@ -184,14 +184,17 @@ class DataEntry(BaseModel):
 async def insert_data(data: DataEntry):
     try:
         with pool.connect() as conn:
-            sql = """
+            sql = sqlalchemy.text("""
             INSERT INTO test_table (message, created_at)
             VALUES (:message, NOW())
-            """
+            """)
             conn.execute(sql, {"message": data.message})
-            conn.commit()
         return {"status": "success", "message": "Data inserted successfully"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 #edward add this#    
 #edward add this#     
+
+
+#    curl -X POST https://edward-zu-run-to-sql-prod-esjn3qpdsa-de.a.run.app/insertdata  -H "Content-Type: application/json" -d '{"message": "Hello, World!"}'
+
