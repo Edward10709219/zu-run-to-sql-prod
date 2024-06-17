@@ -40,26 +40,6 @@ app = FastAPI()
 # 資料庫連線 The Cloud SQL Python Connector
 
 
-#edward add this#
-
-class DataEntry(BaseModel):
-    message: str
-
-@app.post("/insertdata")
-async def insert_data(data: DataEntry):
-    try:
-        with pool.connect() as conn:
-            sql = """
-            INSERT INTO test_table (message, created_at)
-            VALUES (:message, NOW())
-            """
-            conn.execute(sql, {"message": data.message})
-            conn.commit()
-        return {"status": "success", "message": "Data inserted successfully"}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-#edward add this#    
-
 instance_connection_name = os.environ["INSTANCE_CONNECTION_NAME"]
 db_user = os.environ["DB_USER"]  # e.g. 'my-db-user'
 db_pass = os.environ["DB_PASS"]  # e.g. 'my-db-password'
@@ -164,3 +144,27 @@ async def websocket_endpoint(websocket: WebSocket):
 
     except Exception as e:
         raise e
+
+#edward add this#    
+#edward add this#
+    
+pool = connect_with_connector()
+
+class DataEntry(BaseModel):
+    message: str
+
+@app.post("/insertdata")
+async def insert_data(data: DataEntry):
+    try:
+        with pool.connect() as conn:
+            sql = """
+            INSERT INTO test_table (message, created_at)
+            VALUES (:message, NOW())
+            """
+            conn.execute(sql, {"message": data.message})
+            conn.commit()
+        return {"status": "success", "message": "Data inserted successfully"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+#edward add this#    
+#edward add this#     
