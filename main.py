@@ -50,6 +50,7 @@ ip_type = IPTypes.PUBLIC
 
 # initialize Cloud SQL Python Connector object
 connector = Connector()
+
 def getconn() -> pg8000.dbapi.Connection:
     conn: pg8000.dbapi.Connection = connector.connect(
         instance_connection_name,
@@ -162,6 +163,7 @@ async def insert_data(data: DataEntry):
             """)
             print("Executing SQL:", sql)  # 打印 SQL 语句以进行调试
             result = conn.execute(sql, {"message": data.message})
+            conn.commit()
             print("Insert result:", result)  # 打印插入结果以进行调试
         return {"status": "success", "message": "Data inserted successfully"}
     except Exception as e:
